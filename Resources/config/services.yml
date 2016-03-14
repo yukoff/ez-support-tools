@@ -1,9 +1,15 @@
 parameters:
+    support_tools.info_collectors.composer.class: EzSystems\EzSupportToolsBundle\SystemInfo\Collector\ComposerSystemInfoCollector
     support_tools.info_collectors.doctrine_database.class: EzSystems\EzSupportToolsBundle\SystemInfo\Collector\DoctrineDatabaseSystemInfoCollector
     support_tools.info_collectors.ezc_hardware.class: EzSystems\EzSupportToolsBundle\SystemInfo\Collector\EzcHardwareSystemInfoCollector
     support_tools.info_collectors.php.class: EzSystems\EzSupportToolsBundle\SystemInfo\Collector\EzcPhpSystemInfoCollector
 
 services:
+    support_tools.info_collectors.composer:
+        class: %support_tools.info_collectors.composer.class%
+        arguments:
+            - "%kernel.root_dir%/../"
+
     support_tools.info_collectors.doctrine_database:
         class: %support_tools.info_collectors.doctrine_database.class%
         arguments:
