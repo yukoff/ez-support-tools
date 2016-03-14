@@ -21,7 +21,7 @@ class ComposerSystemInfoCollectorTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->composerCollector = new ComposerSystemInfoCollector('vendor/ezsystems/ez-support-tools/Tests/SystemInfo/Collector/_fixtures/');
+        $this->composerCollector = new ComposerSystemInfoCollector(__DIR__ . '/_fixtures/');
     }
 
     public function testBuild()
