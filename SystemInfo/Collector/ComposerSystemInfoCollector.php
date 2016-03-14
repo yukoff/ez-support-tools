@@ -32,12 +32,17 @@ class ComposerSystemInfoCollector implements SystemInfoCollector
      */
     public function build()
     {
-        if (!file_exists($this->installDir . 'composer.lock')) {
-            return new Value\ComposerSystemInfo([]); // @TODO something more informative?
+        $composerLockFile = $this->installDir . 'composer.lock';
+        if (!file_exists($composerLockFile)) {
+            trigger_error(
+                "Composer lock file '$composerLockFile' not found, cannot build package list.",
+                E_USER_WARNING
+            );
+            return new Value\ComposerSystemInfo([]);
         }
 
         $packages = [];
-        $lockData = json_decode(file_get_contents($this->installDir . 'composer.lock'), true);
+        $lockData = json_decode(file_get_contents($composerLockFile), true);
         foreach ($lockData['packages'] as $packageData) {
             $packages[$packageData['name']] = [
                 'version' => $packageData['version'],
