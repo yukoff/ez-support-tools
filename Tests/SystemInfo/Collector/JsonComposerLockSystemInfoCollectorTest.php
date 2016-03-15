@@ -1,28 +1,28 @@
 <?php
 
 /**
- * File containing the ComposerSystemInfoCollectorTest class.
+ * File containing the JsonComposerLockSystemInfoCollectorTest class.
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
 namespace EzSystems\EzSupportToolsBundle\Tests\SystemInfo\Collector;
 
-use EzSystems\EzSupportToolsBundle\SystemInfo\Collector\ComposerSystemInfoCollector;
+use EzSystems\EzSupportToolsBundle\SystemInfo\Collector\JsonComposerLockSystemInfoCollector;
 use EzSystems\EzSupportToolsBundle\SystemInfo\Value\ComposerPackage;
 use EzSystems\EzSupportToolsBundle\SystemInfo\Value\ComposerSystemInfo;
 use PHPUnit_Framework_TestCase;
 
-class ComposerSystemInfoCollectorTest extends PHPUnit_Framework_TestCase
+class JsonComposerLockSystemInfoCollectorTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var ComposerSystemInfoCollector
+     * @var JsonComposerLockSystemInfoCollector
      */
     private $composerCollector;
 
     public function setUp()
     {
-        $this->composerCollector = new ComposerSystemInfoCollector(__DIR__ . '/_fixtures/');
+        $this->composerCollector = new JsonComposerLockSystemInfoCollector(__DIR__ . '/_fixtures/');
     }
 
     public function testBuild()

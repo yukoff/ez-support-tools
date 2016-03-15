@@ -1,7 +1,7 @@
 <?php
 
 /**
- * File containing the ComposerSystemInfoCollector class.
+ * File containing the JsonComposerLockSystemInfoCollector class.
  *
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
@@ -11,9 +11,9 @@ namespace EzSystems\EzSupportToolsBundle\SystemInfo\Collector;
 use EzSystems\EzSupportToolsBundle\SystemInfo\Value;
 
 /**
- * Collects information about installed Composer packages.
+ * Collects information about installed Composer packages, by reading json from composer.lock.
  */
-class ComposerSystemInfoCollector implements SystemInfoCollector
+class JsonComposerLockSystemInfoCollector implements SystemInfoCollector
 {
     /**
      * @var string Installation root directory
