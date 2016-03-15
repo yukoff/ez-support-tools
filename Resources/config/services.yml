@@ -1,7 +1,7 @@
 parameters:
     support_tools.info_collectors.doctrine_database.class: EzSystems\EzSupportToolsBundle\SystemInfo\Collector\DoctrineDatabaseSystemInfoCollector
     support_tools.info_collectors.ezc_hardware.class: EzSystems\EzSupportToolsBundle\SystemInfo\Collector\EzcHardwareSystemInfoCollector
-    support_tools.info_collectors.json_composer_lock.class: EzSystems\EzSupportToolsBundle\SystemInfo\Collector\JsonComposerLockSystemInfoCollector
+    support_tools.info_collectors.composer.lock_file.class: EzSystems\EzSupportToolsBundle\SystemInfo\Collector\JsonComposerLockSystemInfoCollector
     support_tools.info_collectors.php.class: EzSystems\EzSupportToolsBundle\SystemInfo\Collector\EzcPhpSystemInfoCollector
 
 services:
@@ -15,8 +15,8 @@ services:
         arguments:
             - @support_tools.info_collector.system_info.ezc_system_info
 
-    support_tools.info_collectors.json_composer_lock:
-        class: %support_tools.info_collectors.json_composer_lock.class%
+    support_tools.info_collectors.composer.lock_file:
+        class: %support_tools.info_collectors.composer.lock_file.class%
         arguments:
             - "%kernel.root_dir%/../"
 
