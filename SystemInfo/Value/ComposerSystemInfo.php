@@ -18,18 +18,9 @@ class ComposerSystemInfo extends ValueObject implements SystemInfo
     /**
      * Packages.
      *
-     * A two-dimensional hash of composer names and package information, or null if packages cannot be read.
+     * A hash of composer package names and ComposerPackage values, or null if packages cannot be read.
      *
-     * Example of a single entry:
-     * 'ezsystems/ezpublish-kernel' =>
-     * array (
-     *   'version' => 'dev-master',
-     *   'time' => '2016-02-28 14:30:53',
-     *   'homepage' => 'http://share.ez.no',
-     *   'reference' => 'ec897baa77c63b745749acf201e85b92bd614723',
-     * )
-     *
-     * @var array|null
+     * @var ComposerPackage[]|null
      */
     public $packages;
 }

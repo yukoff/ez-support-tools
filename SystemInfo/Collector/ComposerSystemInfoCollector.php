@@ -44,12 +44,12 @@ class ComposerSystemInfoCollector implements SystemInfoCollector
         $packages = [];
         $lockData = json_decode(file_get_contents($composerLockFile), true);
         foreach ($lockData['packages'] as $packageData) {
-            $packages[$packageData['name']] = [
+            $packages[$packageData['name']] = new Value\ComposerPackage([
                 'version' => $packageData['version'],
-                'time' => $packageData['time'],
+                'dateTimeString' => $packageData['time'],
                 'homepage' => isset($packageData['homepage']) ? $packageData['homepage'] : '',
                 'reference' => $packageData['source']['reference'],
-            ];
+            ]);
         }
 
         ksort($packages, SORT_FLAG_CASE | SORT_STRING);
