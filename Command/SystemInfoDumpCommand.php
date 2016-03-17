@@ -8,6 +8,7 @@
  */
 namespace EzSystems\EzSupportToolsBundle\Command;
 
+use eZ\Publish\API\Repository\Values\ValueObject;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -45,7 +46,19 @@ class SystemInfoDumpCommand extends ContainerAwareCommand
         $outputArray = [];
         // attributes() is deprecated, and getProperties() is protected. Smeg it, this is very temporary anyway.
         foreach ($infoValue->attributes() as $property) {
-            $outputArray[$property] = $infoValue->$property;
+            if (is_array($infoValue->$property)) {
+                foreach ($infoValue->$property as $subPropertyKey => $subPropertyEntry) {
+                    if ($subPropertyEntry instanceof ValueObject) {
+                        foreach ($subPropertyEntry->publicProperties() as $subProperty) {
+                            $outputArray[$property][$subPropertyEntry->name][$subProperty] = $subPropertyEntry->$subProperty;
+                        }
+                    } else {
+                        $outputArray[$property][$subPropertyKey] = $subPropertyEntry;
+                    }
+                }
+            } else {
+                $outputArray[$property] = $infoValue->$property;
+            }
         }
 
         $output->writeln(var_export($outputArray, true));

@@ -11,7 +11,6 @@ namespace EzSystems\EzSupportToolsBundle\SystemInfo\Collector;
 use Composer\Json\JsonFile;
 use Composer\Package\Dumper\ArrayDumper;
 use Composer\Repository\InstalledFilesystemRepository;
-use eZ\Publish\API\Repository\Exceptions\PropertyNotFoundException;
 //use EzSystems\EzSupportToolsBundle\SystemInfo\ComposerInstalledFileNotFoundException; //TODO
 use EzSystems\EzSupportToolsBundle\SystemInfo\Value;
 
@@ -48,17 +47,11 @@ class ComposerInstalledFileSystemInfoCollector implements SystemInfoCollector
             new JsonFile($this->installedFile)
         );
         $packages = [];
-        $packageDumper = new ArrayDumper();
 
         foreach ($repository->getPackages() as $package) {
-            $packageValue = new Value\ComposerPackage([]);
-            foreach ($packageDumper->dump($package) as $key => $property) {
-                try {
-                    $packageValue->$key = $property;
-                } catch (PropertyNotFoundException $e) {
-                    print("Property $key not found.\n"); //TODO
-                }
-            }
+            $packageValue = new Value\ComposerPackage([
+                'internalPackage' => $package,
+            ]);
             $packages[$package->getName()] = $packageValue;
         }
 

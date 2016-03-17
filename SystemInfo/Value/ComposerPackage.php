@@ -8,6 +8,7 @@
  */
 namespace EzSystems\EzSupportToolsBundle\SystemInfo\Value;
 
+use Composer\Package\PackageInterface;
 use eZ\Publish\API\Repository\Values\ValueObject;
 
 /**
@@ -16,38 +17,70 @@ use eZ\Publish\API\Repository\Values\ValueObject;
 class ComposerPackage extends ValueObject implements SystemInfo
 {
     /**
-     * Version.
+     * Internal Composer package object
      *
-     * Example: v2.7.10
-     *
-     * @var string
+     * @var \Composer\Package\PackageInterface
      */
-    public $version;
+    protected $internalPackage;
 
     /**
-     * Date and time string.
+     * Magic get function handling access to getters on the internal composer object.
      *
-     * Example: 2016-02-28 20:37:19
+     * Returns value for all readonly (protected) properties.
      *
-     * @var string
+     * @param string $property Name of the property
+     *
+     * @return mixed
      */
-    public $dateTimeString;
+    public function __get($property)
+    {
+        $methodName = 'get' . ucfirst($property); //TODO move to private method
+        if (method_exists($this->internalPackage, $methodName)) {
+            return $this->internalPackage->$methodName();
+        }
+
+        parent::__get($property);
+    }
 
     /**
-     * Homepage URL.
+     * Function where list of properties are returned.
      *
-     * Example: https://symfony.com
+     * Used by {@see attributes()}, override to add dynamic properties
      *
-     * @var string
+     * @uses __isset()
+     *
+     * @todo Make object traversable and reuse this function there (hence why this is not exposed)
+     *
+     * @param array $dynamicProperties Additional dynamic properties exposed on the object
+     *
+     * @return array
      */
-    public $homepage;
+    protected function getProperties($dynamicProperties = array())
+    {
+        $properties = $dynamicProperties;
+
+        // TODO Not very nice. Use hardcoded lookup table instead?
+        foreach (get_class_methods($this->internalPackage) as $methodName) {
+            if ($methodName === 'getRepository') {
+                continue;
+            }
+
+            if (substr($methodName, 0, 3) === 'get') {
+                $propertyName = lcfirst(substr($methodName, 3)); //TODO move to private method
+                $properties[] = $propertyName;
+            }
+        }
+
+        return $properties;
+    }
 
     /**
-     * Reference.
+     * TODO this just exposes getProperties() publicly, hack for temporary dump command.
      *
-     * Example: 9a3b6bf6ebee49370aaf15abc1bdeb4b1986a67d
-     *
-     * @var string
+     * @return array
      */
-    public $reference;
+    public function publicProperties()
+    {
+        return $this->getProperties();
+    }
 }
