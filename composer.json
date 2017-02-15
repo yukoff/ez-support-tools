@@ -9,8 +9,8 @@
         }
     ],
     "require": {
-        "ezsystems/ezpublish-kernel": "^6.2",
-        "ocramius/proxy-manager": "~1.0|~2.0",
+        "ezsystems/ezpublish-kernel": "^6.2|^7.0",
+        "ocramius/proxy-manager": "^1.0|^2.0",
         "symfony/proxy-manager-bridge": "*",
         "zetacomponents/system-information": "^1.1"
     },
@@ -21,7 +21,8 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.1.x-dev"
+            "dev-master": "0.1.x-dev",
+            "dev-fos_http_cache_2.0": "0.1.x-dev"
         }
     },
     "config": {
